@@ -8,7 +8,7 @@ import schedule
 import datetime
 import time
 
-img_types = ['png', 'PNG', 'jpg', 'jpeg', 'JPG', 'JPEG', 'tif', 'tiff']
+img_types = ['.png', '.PNG', '.jpg', '.jpeg', '.JPG', '.JPEG', '.tif', 'tiff']
 
 
 MASTER_DIR = '/mnt/g/SNU_VCL'
@@ -55,7 +55,7 @@ class AutoUpate_Server():
                 if extension in img_types:
                     img_path = path.join(root, name)
 
-                    if path.getmtime(img_path) > self.last_update:
+                    if path.getmtime(img_path) > self.last_update or path.getctime(img_path) > self.last_update:
                         new_flists.append(img_path)
                     else:
                         flists.append(img_path)
@@ -70,11 +70,12 @@ class AutoUpate_Server():
         update the images
         '''
         flists, new_flist = self.get_flist()
-        remove_list = [ind for ind, f in enumerate(self.flists) if f not in flists]
+        remove_list = [f for f in self.flists if f not in flists]
 
         self.rm_plot(remove_list)
         self.add_plot(new_flist)
         self.flists = list(self.wind_ids.keys())
+        self.last_update = time.mktime(datetime.datetime.today().timetuple())
 
 
     def add_plot(self, new_list):
@@ -87,6 +88,9 @@ class AutoUpate_Server():
             if img.shape[-1] == 4:
                 # in case of RGBA
                 img = img[:,:,0:3]
+
+            if img.shape[-1] == 3:
+                img = img.transpose(2,0,1) # visdom gets image as C x W x H
 
             if self.use_single_env:
                 env_name = 'main'
@@ -113,60 +117,5 @@ class AutoUpate_Server():
 
             self.viz.close(win = wind_id[0], env = wind_id[1])
         
-
-
-
-
-
-
-            
-
-
-
-
-def plot_folder(dir, env_name = None):
-    f_list = glob.glob(path.join(dir,'*.png'))
-    f_list_jpg = glob.glob(path.join(dir,'*.JPEG'))
-    f_list.extend(f_list_jpg)
-
-    if env_name == None:
-        env_name = path.basename(dir)
-    else:
-        env_name += path.basename(dir)
-
-    if len(f_list) == 0:
-        print('no file to plot')
-        return
-    
-    
-    for file in f_list:
-        img = plt.imread(file)
-        if img.shape[-1] == 4:
-            img = img[:,:,0:3]
-
-        f_n = path.basename(file)
-        f_n = path.splitext(f_n)[0]
-        plot_img(img, env_name, f_n)
-
-
-
-if __name__ == '__main__':
-    sample_dir = os.listdir(SAMPLE_DATASET)
-    for dir_ in sample_dir:
-        dir = path.join(SAMPLE_DATASET, dir_)
-        plot_folder(dir, env_name="SAMPLE")
-
-    for i, dir in enumerate(DIR_LIST):
-        if i==0:
-            en = "Imgnet_"
-        elif i==2:
-            en = "INat_"
-        else:
-            en = ""
-        
-        plot_folder(dir, env_name=en)
-
-    
-
 
 

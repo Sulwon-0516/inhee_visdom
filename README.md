@@ -16,18 +16,18 @@ You shoud install visdom & schedule, matplotlib
 pip install visdom schedule matplotlib
 ```
 
-## How to Run
-### run simply
+## Run With single line
 you can simply start program with following commands.
 you should type passwd at beginning (install tmux)
 
 ```
-./sh/server_tmux.sh
+./sh/server_tmux.sh [YOUR_DB_DIR] [YOUR_ID] [YOUR_PASSWD]
 ```
 (It will turn of a tmux session whose name is "visdom" as initialization)
 
 You can also run the server manually with following instruction.
 
+## Run manually
 ### run visdom server
 You should run visdom server in background continuously. 
 I recommend you use `screen` or `tmux` to run visdom server in background.
