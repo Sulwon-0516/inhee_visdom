@@ -1,10 +1,10 @@
 # Inhee's visdom template
 ## Disclaimer
 Here I share a simple visdom server. 
-I hope this code could be helpful to share our progress and experiment results.
+I hope this code will help us share our progress and experiment results.
 
 ## Simple Introduction
-What visdom does is basically same as Tensorboard.
+What visdom do is basically same as Tensorboard.
 Visdom support plotting graph, scatter, geometries with 2D images. 
 
 ### Cons
@@ -17,9 +17,8 @@ Also Visdom is quite slow, so I basically recommend Tensorboard to manage experi
 
 ### My server
 
-You should put the ["top directory"] you want to plot images. 
-(Currently, Only single directory is allowed. I'll update it soon)
-Then it plots ALL png/jpg/jpeg/tiff images in the directory.
+You should input **["top directory"]** you want to plot images. 
+Then it plots ALL **png** / **jpg** / **jpeg** / **tiff** images in the directory.
 Also it updates the content every 5 minutes when...
 - file name changed
 - file is moved / removed
@@ -104,3 +103,7 @@ python run.py --dir YOUR_DIR --update_period 5
 - Visdom server holds ALL IMAGES on RAM. It would be super heavy and slow down your machine extremely if you try to plot tons of images.
 
 
+## Update plan
+
+- Currently, Only single directory is allowed. support of Multiple direcotry will be update it soon
+- Supporting short videos and **gif**

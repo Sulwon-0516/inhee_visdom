@@ -7,7 +7,7 @@ import schedule
 import datetime
 import time
 
-img_types = ['.png', '.PNG', '.jpg', '.jpeg', '.JPG', '.JPEG', '.tif', 'tiff']
+img_types = ['.png', '.PNG', '.jpg', '.jpeg', '.JPG', '.JPEG', '.tif', 'tiff', '.TIF', '.TIFF']
 
 
 MASTER_DIR = '/mnt/g/SNU_VCL'
