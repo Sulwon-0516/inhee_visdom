@@ -1,24 +1,26 @@
-# Inhee's visdom template
+# Result plotting server w/ Visdom 
 ## Disclaimer
 Here I share a simple visdom server. 
 I hope this code will help us share our progress and experiment results.
 
 ## Simple Introduction
-What visdom do is basically same as Tensorboard.
-Visdom support plotting graph, scatter, geometries with 2D images. 
+What `Visdom` do is basically same as `Tensorboard`.
+`Visdom` support plotting graph, scatter, geometries with 2D images. 
 
 ### Cons
 
-However, unlike Tensorboard, Visdom doesn't save the content of server in a file (in default).
+However, unlike `Tensorboard`, `Visdom` doesn't save the content of server in a file (in default).
 Easily, the content is volatile. 
-It's why I only using Visdom to showing saved images rather than plotting the loss-function or intermediate output
-Also Visdom is quite slow, so I basically recommend Tensorboard to manage experiments. 
+It's why I only using `Visdom` to showing saved images rather than plotting the loss-function or intermediate output
+Also `Visdom` is quite slow, so I basically recommend `Tensorboard` to manage experiments. 
 
 
 ### My server
 
 You should input **["top directory"]** you want to plot images. 
 Then it plots ALL **png** / **jpg** / **jpeg** / **tiff** images in the directory.
+
+
 Also it updates the content every 5 minutes when...
 - file name changed
 - file is moved / removed
@@ -47,6 +49,7 @@ pip install visdom schedule matplotlib
 ### Issues with conda
 If you are using conda environment, I recommend you install python requirements on "base" environment. 
 Instead you can modify shell script to activate conda environment before launching server.
+
 
 
 ## Quick start
@@ -97,6 +100,31 @@ python run.py --dir YOUR_DIR --update_period 5
 - `--single_env` options is not fully implemented yet. Default : True
 
 
+
+## Issues with port
+The default port is `8097`. 
+You can access the server anywhere with following address
+
+```
+https://[YOUR_IP_ADDRESS]:8097
+```
+
+If it's not working (like responding TIME_OUT), you should check your firewall. 
+
+```
+sudo apt-get install iptables
+sudo iptables -nL | grep [YOUR_PORT, default 8097]
+```
+
+If there's no result, you need to add additional rule
+
+```
+sudo iptables -I INPUT 1 -p tcp --dport [YOUR_PORT, default 8097] -j ACCEPT
+```
+
+This command allow TCP input with that port.
+
+
 ## Guide
 - It automatically checks file and folder removed / created.
 - Changing file or dirname would be treated as removed and created again.
@@ -107,3 +135,19 @@ python run.py --dir YOUR_DIR --update_period 5
 
 - Currently, Only single directory is allowed. support of Multiple direcotry will be update it soon
 - Supporting short videos and **gif**
+
+
+## Some examples
+
+- When you launched program & attached to tmux session
+
+![Screenshot from 2022-07-15 19-06-11](https://user-images.githubusercontent.com/65122489/179206746-92310792-5b89-401e-933e-9b6e1f9eadf1.png)
+
+- Example 1
+
+![Screenshot from 2022-07-15 19-32-23](https://user-images.githubusercontent.com/65122489/179206987-93eef03c-6897-47a3-8bef-b61d5e37c6f6.png)
+
+
+- Example 2 (filtered with keyword **"beetle"**)
+
+![Screenshot from 2022-07-15 19-32-23](https://user-images.githubusercontent.com/65122489/179206987-93eef03c-6897-47a3-8bef-b61d5e37c6f6.png)

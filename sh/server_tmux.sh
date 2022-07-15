@@ -1,4 +1,4 @@
-if [ $# -eq 0]
+if [ $# -eq 0 ]
     then 
         echo "No argument"
         echo "Your dataset directory: current working directory"
@@ -12,10 +12,11 @@ if [ $# -eq 0]
         tmux send "1234" ENTER;
         tmux send '1234' ENTER;
         tmux split-window;
+        sleep 1
         tmux send "python run.py" ENTER;
 fi
 
-if [ $# -eq 1]
+if [ $# -eq 1 ]
     then 
         echo "One argument"
         echo "Your dataset directory : $1"
@@ -29,10 +30,11 @@ if [ $# -eq 1]
         tmux send "1234" ENTER;
         tmux send '1234' ENTER;
         tmux split-window;
-        tmux send "python run.py" ENTER;
+        sleep 1
+        tmux send "python run.py --dir $1" ENTER;
 fi
 
-if [ $# -eq 2]
+if [ $# -eq 2 ]
     then 
         echo "One argument"
         echo "Your dataset directory : $1"
@@ -46,10 +48,11 @@ if [ $# -eq 2]
         tmux send "$2" ENTER;
         tmux send '1234' ENTER;
         tmux split-window;
-        tmux send "python run.py" ENTER;
+        sleep 1
+        tmux send "python run.py --dir $1 --passwd $3" ENTER;
 fi
 
-if [ $# -eq 3]
+if [ $# -eq 3 ]
     then
         echo "Two argument"
         echo "Your dataset directory: $1"
@@ -63,12 +66,14 @@ if [ $# -eq 3]
         tmux send "$3" ENTER;
         tmux send '1234' ENTER;
         tmux split-window;
-        tmux send "python run.py --dir $1" ENTER;
+        sleep 1
+        tmux send "python run.py --dir $1 --username $2 --passwd $3" ENTER;
 fi
 
 
 
-if [ $# -gt 3]
+if [ $# -gt 3 ]
     then
         echo "Too many arugments"
         echo "Use less than 3 arguments here"
+fi
