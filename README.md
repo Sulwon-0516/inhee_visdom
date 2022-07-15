@@ -5,7 +5,36 @@ I hope this code could be helpful to share our progress and experiment results.
 
 ## Simple Introduction
 What visdom does is basically same as Tensorboard.
+Visdom support plotting graph, scatter, geometries with 2D images. 
 
+### Cons
+
+However, unlike Tensorboard, Visdom doesn't save the content of server in a file (in default).
+Easily, the content is volatile. 
+It's why I only using Visdom to showing saved images rather than plotting the loss-function or intermediate output
+Also Visdom is quite slow, so I basically recommend Tensorboard to manage experiments. 
+
+
+### My server
+
+You should put the ["top directory"] you want to plot images. 
+(Currently, Only single directory is allowed. I'll update it soon)
+Then it plots ALL png/jpg/jpeg/tiff images in the directory.
+Also it updates the content every 5 minutes when...
+- file name changed
+- file is moved / removed
+
+
+### Application Guide
+Each image has their title, and the title is "absolute path" of the image
+You can find search-bar on the top right corner of screen. 
+You can filtering the content to be shown with search-bar. 
+
+```
+[keyword1].*[keyword2].*[keyword3]
+```
+Like above example, Visdom support `.*` as similar as regex. 
+(Just use `.*` as `*` in shell, which means "0 or more of any character")
 
 
 ## Requirements
@@ -16,19 +45,34 @@ You shoud install visdom & schedule, matplotlib
 pip install visdom schedule matplotlib
 ```
 
-## Run With single line
+### Issues with conda
+If you are using conda environment, I recommend you install python requirements on "base" environment. 
+Instead you can modify shell script to activate conda environment before launching server.
+
+
+## Quick start
 you can simply start program with following commands.
 you should type passwd at beginning (install tmux)
 
 ```
 ./sh/server_tmux.sh [YOUR_DB_DIR] [YOUR_ID] [YOUR_PASSWD]
 ```
-(It will turn of a tmux session whose name is "visdom" as initialization)
+(It will turn off a tmux session whose name is "visdom" as initialization)
 
-You can also run the server manually with following instruction.
+You can run the code with 0~3 arguments
+- default setting: 
+    - DIR : Current working directory
+    - ID : root
+    - PASSWD : 1234
+- 1 argument: [DB_directory] 
+- 2 arguments : [DB_directory] [YOUT_PASSWD]
+
+
+
 
 ## Run manually
-### run visdom server
+You can also run server manually. 
+### 1. run visdom server
 You should run visdom server in background continuously. 
 I recommend you use `screen` or `tmux` to run visdom server in background.
 
@@ -41,22 +85,22 @@ visdom -port 8097 -enable_login
 
 You should set ID/PASSWD when you boot your server.
 
-### run my image plotter
+### 1. run my image plotting server
 My image plotter plot all image files in the given directory.
 It updates the images every 5 minute (default)
 You should run the code in background similar as visdom server.
 
-
 ```
-python run.py --dir YOUR_DIR --single_env True --update_period 5
+python run.py --dir YOUR_DIR --update_period 5
 ```
 
-## About my code
+- You can change refractory period of update with `--update_period` whose unit is minute.
+- `--single_env` options is not fully implemented yet. Default : True
 
 
 ## Guide
-It automatically checks file and folder removed / created.
-Changing file or dirname would be treated as removed and created again.
-
+- It automatically checks file and folder removed / created.
+- Changing file or dirname would be treated as removed and created again.
+- Visdom server holds ALL IMAGES on RAM. It would be super heavy and slow down your machine extremely if you try to plot tons of images.
 
 

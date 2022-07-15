@@ -2,7 +2,6 @@ import glob
 import matplotlib.pyplot as plt
 import os
 import os.path as path
-import numpy as np
 from visdom import Visdom
 import schedule
 import datetime
