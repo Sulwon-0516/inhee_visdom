@@ -150,4 +150,4 @@ This command allow TCP input with that port.
 
 - Example 2 (filtered with keyword **"beetle"**)
 
-![Screenshot from 2022-07-15 19-32-23](https://user-images.githubusercontent.com/65122489/179206987-93eef03c-6897-47a3-8bef-b61d5e37c6f6.png)
+![Screenshot from 2022-07-15 19-33-20](https://user-images.githubusercontent.com/65122489/179207470-f9fb8c76-91e2-439e-b25a-5a2c6b739e15.png)
