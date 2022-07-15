@@ -87,7 +87,7 @@ visdom -port 8097 -enable_login
 
 You should set ID/PASSWD when you boot your server.
 
-### 1. run my image plotting server
+### 2. run image plotting server
 My image plotter plot all image files in the given directory.
 It updates the images every 5 minute (default)
 You should run the code in background similar as visdom server.
@@ -99,7 +99,7 @@ python run.py --dir YOUR_DIR --update_period 5
 - You can change refractory period of update with `--update_period` whose unit is minute.
 - `--single_env` options is not fully implemented yet. Default : True
 
-
+### Done!
 
 ## Issues with port
 The default port is `8097`. 
