@@ -51,6 +51,19 @@ If you are using conda environment, I recommend you install python requirements 
 Instead you can modify shell script to activate conda environment before launching server.
 
 
+## Before starting
+Check whether following direcotry exist or not.
+
+```
+/home/[username]/.visdom/
+```
+
+if it doesn't exist, please make directory with following command
+
+```
+mkdir /home/[username]/.visdom/
+```
+
 
 ## Quick start
 you can simply start program with following commands.
