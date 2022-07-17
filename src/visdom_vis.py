@@ -2,27 +2,30 @@ import glob
 import matplotlib.pyplot as plt
 import os
 import os.path as path
-import numpy as np
 from visdom import Visdom
 import schedule
 import datetime
 import time
 
-img_types = ['.png', '.PNG', '.jpg', '.jpeg', '.JPG', '.JPEG', '.tif', 'tiff']
+img_types = ['.png', '.PNG', '.jpg', '.jpeg', '.JPG', '.JPEG', '.tif', 'tiff', '.TIF', '.TIFF']
 
 
 MASTER_DIR = '/mnt/g/SNU_VCL'
 
 
 class AutoUpate_Server():
-    def __init__(self, top = MASTER_DIR, use_single_env = True):
+    def __init__(self, arg):
         self.flists = []
-        self.use_single_env = use_single_env
-        self.top = path.abspath(top)
+        self.use_single_env = arg.single_env
+        self.top = path.abspath(arg.dir)
         self.n_top = len(self.top.split("/"))
 
         # initialize server
-        self.viz = Visdom()
+        self.viz = Visdom(
+            port = arg.port,
+            username = arg.username,
+            password = arg.passwd
+        )
 
         # get initial flists
         self.last_update = time.mktime(datetime.datetime.today().timetuple())
